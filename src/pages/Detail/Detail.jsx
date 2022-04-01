@@ -13,9 +13,6 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
 import Chart from "chart.js/auto";
-// import * as XLSX from "xlsx/xlsx.mjs";
-// import * as XLSX from "https://unpkg.com/xlsx/xlsx.mjs";
-import { SaveAs } from "@mui/icons-material";
 
 const Detail = () => {
   const [age, setAge] = React.useState("");
@@ -32,6 +29,7 @@ const Detail = () => {
     loadingOverlay[0].classList.add("block");
   };
   setTimeout(() => {
+    window.scrollTo(0, 0);
     loading[0].classList.remove("block");
     loadingOverlay[0].classList.remove("block");
   }, 1100);

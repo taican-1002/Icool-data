@@ -30,6 +30,7 @@ const Home = () => {
         navigate("/detail");
         window.location.reload(true);
         setTimeout(() => {
+          window.scrollTo(0, 0);
           window.location.reload(false);
         }, 10);
         console.log(response.data);
