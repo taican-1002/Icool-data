@@ -29,6 +29,9 @@
       flex-direction: column;
       padding: 70px 50px;
     }
+    @media (min-width: 992px) and (max-width: 1024px) {
+      align-items: center;
+    }
     @include mobile {
       padding: 70px 10px;
     }
@@ -107,6 +110,12 @@
   left: 50%;
   width: 100px;
   height: 100px;
+  @include tablet {
+    left: 45%;
+  }
+  @include mobile {
+    left: 40%;
+  }
 }
 .loading-overlay {
   display: none;
