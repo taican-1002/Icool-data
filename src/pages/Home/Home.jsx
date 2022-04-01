@@ -7,6 +7,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import baseReq from "../../api/baseReq";
 
 const Home = () => {
@@ -37,9 +39,9 @@ const Home = () => {
       })
       .catch(function (error) {
         if (!email || !password) {
-          alert(error.response.data.message);
+          toast.warning(error.response.data.message);
         } else {
-          alert("Incorrect account or password!!");
+          toast.error("Incorrect account or password!!");
         }
         setError(error.response.data);
       });
