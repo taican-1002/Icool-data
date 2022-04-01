@@ -26,7 +26,6 @@ const Detail = () => {
   useEffect(() => {
     //ChartJs
     const ctx = document.querySelector("#chart").getContext("2d");
-    console.log(ctx);
     const myChart = new Chart(ctx, {
       type: "line",
       data: {
@@ -51,10 +50,12 @@ const Detail = () => {
             borderColor: "#ccc",
             backgroundColor: "#C9F4E8",
             fill: true,
+            tension: 0.4,
           },
         ],
       },
       options: {
+        responsive: true,
         title: {
           display: true,
           text: "World population per region (in millions)",

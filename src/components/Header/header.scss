@@ -24,6 +24,9 @@
     height: 31px;
   }
   &__user {
+    @include tablet {
+      font-size: 20px;
+    }
     &-name {
       position: relative;
       @include flex(center, center);
@@ -58,10 +61,23 @@
       border: none;
       background: #d4e5ff;
       text-align: left;
+      @include tablet {
+        top: 4rem;
+        width: 12rem;
+      }
+      @include mobile {
+        width: 14rem;
+      }
       &:hover {
         background-color: #000;
         color: #fff;
       }
     }
+  }
+}
+.css-i4bv87-MuiSvgIcon-root {
+  @include tablet {
+    width: 2em !important;
+    height: 2em !important;
   }
 }
