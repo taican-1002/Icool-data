@@ -13,7 +13,6 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
 import Chart from "chart.js/auto";
-import { toast } from "react-toastify";
 
 const Detail = () => {
   const [age, setAge] = React.useState("");
@@ -28,7 +27,6 @@ const Detail = () => {
   window.onload = () => {
     loading[0].classList.add("block");
     loadingOverlay[0].classList.add("block");
-    toast.success("Login success");
   };
   setTimeout(() => {
     window.scrollTo(0, 0);
@@ -166,7 +164,7 @@ const Detail = () => {
           </div>
           <div className="col-md-12 col-lg-2"></div>
           <div className="col-md-12 col-lg-7 detail__chart">
-            <div className="detail__chartS--title">Biểu đồ dự đoán</div>
+            <div className="detail__chart--title">Biểu đồ dự đoán</div>
             <div className="detail__chart--desc">Doanh thu</div>
             <canvas id="chart" width="400" height="400"></canvas>
           </div>

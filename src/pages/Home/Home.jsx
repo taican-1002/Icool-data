@@ -35,7 +35,7 @@ const Home = () => {
           window.scrollTo(0, 0);
           window.location.reload(false);
         }, 10);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(function (error) {
         if (!email || !password) {
