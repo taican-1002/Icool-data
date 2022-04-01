@@ -1,0 +1,64 @@
+@use "../../scss/" as *;
+
+.home {
+  position: relative;
+  padding: 190px 390px;
+  @include tablet {
+    padding: 187px 70px;
+  }
+  @media (min-width: 992px) and (max-width: 1399px) {
+    padding: 190px 200px;
+  }
+  @include mobile {
+    padding: 190px 30px;
+  }
+
+  &__form {
+    box-shadow: 0px 0px 17px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 80px 70px;
+    @include mobile {
+      padding: 80px 30px;
+    }
+  }
+  &__title {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: $txt-color;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  &__input-user,
+  &__input-password,
+  &__input-checkbox,
+  &-btn {
+    width: 100%;
+  }
+  &__input-password {
+    margin: 20px 0 !important;
+  }
+  &__input-checkbox {
+    margin-bottom: 20px !important;
+  }
+  #form {
+    @include flex(center, center);
+    flex-direction: column;
+  }
+}
+
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #000 !important;
+  border-width: 1px !important;
+}
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: $txt-color !important;
+}
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  background-color: $main-color !important;
+}
