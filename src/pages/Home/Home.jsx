@@ -17,6 +17,8 @@ const Home = () => {
   const [error, setError] = useState("");
 
   let navigate = useNavigate();
+  const loading = document.getElementsByClassName("loading");
+  const loadingOverlay = document.getElementsByClassName("loading-overlay");
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -33,9 +35,13 @@ const Home = () => {
         window.location.reload(true);
         setTimeout(() => {
           window.scrollTo(0, 0);
-          window.location.reload(false);
-        }, 10);
-        // console.log(response.data);
+          loading[0].classList.add("block");
+          loadingOverlay[0].classList.add("block");
+        }, 500);
+        setTimeout(() => {
+          loading[0].classList.remove("block");
+          loadingOverlay[0].classList.remove("block");
+        }, 1100);
       })
       .catch(function (error) {
         if (!email || !password) {

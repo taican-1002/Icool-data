@@ -12,42 +12,40 @@ const Header = () => {
   const headerRef = useRef(null);
   const [user, setUser] = useState("");
   const navigate = useNavigate();
-
   const loading = document.getElementsByClassName("loading");
   const loadingOverlay = document.getElementsByClassName("loading-overlay");
-
-  window.onload = () => {
-    loading[0].classList.add("block");
-    loadingOverlay[0].classList.add("block");
-  };
-  setTimeout(() => {
-    loading[0].classList.remove("block");
-    loadingOverlay[0].classList.remove("block");
-  }, 1100);
-
-  const CheckedLogin = async () => {
-    await baseReq
-      .post("user")
-      .then((response) => {
-        // console.log(response);
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const handleLogout = () => {
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("user");
     navigate("/");
+
     window.location.reload(true);
     setTimeout(() => {
       window.location.reload(false);
     }, 10);
   };
-  // console.log(user);
   useEffect(() => {
+    window.onload = () => {
+      loading[0].classList.add("block");
+      loadingOverlay[0].classList.add("block");
+    };
+    setTimeout(() => {
+      loading[0].classList.remove("block");
+      loadingOverlay[0].classList.remove("block");
+    }, 1100);
+    const CheckedLogin = async () => {
+      await baseReq
+        .post("user")
+        .then((response) => {
+          // console.log(response);
+          setUser(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     const shrinkHeader = () => {
       if (
         document.body.scrollTop > 100 ||
@@ -71,14 +69,18 @@ const Header = () => {
         <Link to="/">
           <img src={logo} alt="" className="header__logo" />
         </Link>
-
+        <div className="loading-overlay">
+          <div className="spinner-border loading" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
         <div>
           {user != "" ? (
             <div className="header__user">
               <div className="header__user-name">
                 <PersonOutlineIcon style={{ color: "#fff" }} />
                 <div className="header__user-username">{user.name}</div>
-                <button onClick={handleLogout} className="header__user-btn">
+                <button className="header__user-btn" onClick={handleLogout}>
                   Đăng xuất
                 </button>
               </div>

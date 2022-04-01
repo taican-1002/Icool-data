@@ -1,42 +1,32 @@
-import React, { useState, useEffect } from "react";
 import "./detail.scss";
+
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import fileDownload from "js-file-download";
 
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
-
 import Button from "@mui/material/Button";
-
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
 import Chart from "chart.js/auto";
 
 const Detail = () => {
-  const [age, setAge] = React.useState("");
+  const [date, setDate] = React.useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setDate(event.target.value);
   };
 
   const loading = document.getElementsByClassName("loading");
   const loadingOverlay = document.getElementsByClassName("loading-overlay");
 
-  window.onload = () => {
-    loading[0].classList.add("block");
-    loadingOverlay[0].classList.add("block");
-  };
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-    loading[0].classList.remove("block");
-    loadingOverlay[0].classList.remove("block");
-  }, 1100);
-
   useEffect(() => {
     //ChartJs
-    const ctx = document.getElementById("chart").getContext("2d");
+    const ctx = document.querySelector("#chart").getContext("2d");
+    console.log(ctx);
     const myChart = new Chart(ctx, {
       type: "line",
       data: {
@@ -83,6 +73,20 @@ const Detail = () => {
         },
       },
     });
+    if (myChart.id === 1) {
+      myChart.destroy();
+    }
+
+    window.onload = () => {
+      loading[0].classList.add("block");
+      loadingOverlay[0].classList.add("block");
+    };
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      loading[0].classList.remove("block");
+      loadingOverlay[0].classList.remove("block");
+    }, 2000);
+
     // console.log(myChart.data.datasets[0].data);
     const btn = document.getElementsByClassName("detail-btn");
     function download() {
@@ -116,7 +120,7 @@ const Detail = () => {
               </InputLabel>
               <NativeSelect
                 inputProps={{
-                  name: "age",
+                  name: "date",
                   id: "demo-simple-select",
                 }}
                 onChange={handleChange}
@@ -152,7 +156,6 @@ const Detail = () => {
                 />
               </Stack>
             </div>
-
             <Button variant="contained" className="detail-btn">
               Download
             </Button>
