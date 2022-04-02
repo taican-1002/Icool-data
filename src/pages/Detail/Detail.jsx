@@ -24,8 +24,10 @@ const Detail = () => {
   const loadingOverlay = document.getElementsByClassName("loading-overlay");
 
   useEffect(() => {
+    var canvas = (document.querySelector(".detail__chart").innerHTML =
+      '<canvas id="chart" width="400" height="400"></canvas>');
+    var ctx = document.querySelector("#chart").getContext("2d");
     //ChartJs
-    const ctx = document.querySelector("#chart").getContext("2d");
     const myChart = new Chart(ctx, {
       type: "line",
       data: {
@@ -74,9 +76,12 @@ const Detail = () => {
         },
       },
     });
-    if (myChart.id === 1) {
-      myChart.destroy();
-    }
+    // const validate = document.getElementsByClassName("fromDate");
+    // validate[0].addEventListener("change", (e) => {
+    //   console.log(e.target.value);
+    //   myChart.data.labels = ["1/1", "2/1"];
+    //   myChart.update();
+    // });
 
     window.onload = () => {
       loading[0].classList.add("block");
@@ -134,11 +139,12 @@ const Detail = () => {
             </FormControl>
             <div className="detail-time">
               <div className="detail-title">Thời gian dự đoán</div>
-              <Stack component="form" noValidate spacing={3}>
+              <Stack component="form" spacing={3}>
                 <TextField
                   id="date"
                   label="Từ ngày"
                   type="date"
+                  className="fromDate"
                   defaultValue="2022-03-20"
                   sx={{ width: 220 }}
                   InputLabelProps={{
@@ -170,7 +176,7 @@ const Detail = () => {
           <div className="col-md-12 col-lg-7 detail__chart">
             <div className="detail__chart--title">Biểu đồ dự đoán</div>
             <div className="detail__chart--desc">Doanh thu</div>
-            <canvas id="chart" width="400" height="400"></canvas>
+            {/* <canvas id="newChart" width="400" height="400"></canvas> */}
           </div>
         </div>
       </div>
