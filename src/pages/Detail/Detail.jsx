@@ -15,6 +15,7 @@ import Chart from "chart.js/auto";
 
 const Detail = () => {
   const [date, setDate] = React.useState("");
+  const [store, setStore] = React.useState([]);
 
   const handleChange = (event) => {
     setDate(event.target.value);
@@ -24,8 +25,10 @@ const Detail = () => {
   const loadingOverlay = document.getElementsByClassName("loading-overlay");
 
   useEffect(() => {
-    var canvas = (document.querySelector(".detail__chart").innerHTML =
-      '<canvas id="chart" width="400" height="400"></canvas>');
+    var canvas = (document.querySelector(".detail__chart").innerHTML = `
+      <div class="detail__chart--title">Biểu đồ dự đoán doanh thu</div>
+      <canvas id="chart" width="200" height="200"></canvas>
+      `);
     var ctx = document.querySelector("#chart").getContext("2d");
     //ChartJs
     const myChart = new Chart(ctx, {
@@ -48,7 +51,7 @@ const Detail = () => {
               9000000, 40000000, 70000000, 30000000, 90000000, 60000000,
               110000000, 12000000, 120000000,
             ],
-            label: "Icool",
+            label: "Doanh thu",
             borderColor: "#ccc",
             backgroundColor: "#C9F4E8",
             fill: true,
@@ -57,6 +60,42 @@ const Detail = () => {
         ],
       },
       options: {
+        scales: {
+          x: {
+            ticks: {
+              font: function (context) {
+                var width = context.chart.width;
+                var size = Math.round(width / 48);
+                if (size < 12) {
+                  size = 12;
+                }
+                return {
+                  weight: 600,
+                  size: size,
+                };
+              },
+              color: "black",
+            },
+          },
+
+          y: {
+            ticks: {
+              beginAtZero: true,
+              font: function (context) {
+                var width = context.chart.width;
+                var size = Math.round(width / 48);
+                if (size < 12) {
+                  size = 12;
+                }
+                return {
+                  weight: 600,
+                  size: size,
+                };
+              },
+              color: "black",
+            },
+          },
+        },
         responsive: true,
         title: {
           display: true,
@@ -97,7 +136,7 @@ const Detail = () => {
     const btn = document.getElementsByClassName("detail-btn");
     function download() {
       axios
-        .get("http://192.168.137.1:3000/todo/export", {
+        .get("apiExcel/here", {
           responseType: "blob",
         })
         .then((res) => {
@@ -110,13 +149,21 @@ const Detail = () => {
     btn[0].addEventListener("click", () => {
       download();
     });
+
+    const getStore = async () => {
+      await axios
+        .get("https://fakestoreapi.com/users")
+        .then((res) => setStore(res.data))
+        .catch((error) => console.log(error));
+    };
+    getStore();
   }, []);
 
   return (
     <div className="detail">
       <div className="container-fluid detail__wrap ">
         <div className="detail__body">
-          <div className="col-md-12 col-lg-3 detail__left">
+          <div className="col-12 col-md-12 col-lg-3 detail__left">
             <FormControl fullWidth>
               <InputLabel
                 id="demo-simple-select-label"
@@ -124,18 +171,22 @@ const Detail = () => {
               >
                 Cửa hàng
               </InputLabel>
-              <NativeSelect
-                inputProps={{
-                  name: "date",
-                  id: "demo-simple-select",
-                }}
-                onChange={handleChange}
-                defaultValue={10}
-              >
-                <option value={10}>Ung Văn Khiêm</option>
-                <option value={20}>TP.HCM</option>
-                <option value={30}>Hà Nội</option>
-              </NativeSelect>
+              {store.length > 0 && (
+                <NativeSelect
+                  inputProps={{
+                    name: "date",
+                    id: "demo-simple-select",
+                  }}
+                  onChange={handleChange}
+                  defaultValue={1}
+                >
+                  {store.map((item, index) => (
+                    <option value={item.id} key={index}>
+                      {item.username}
+                    </option>
+                  ))}
+                </NativeSelect>
+              )}
             </FormControl>
             <div className="detail-time">
               <div className="detail-title">Thời gian dự đoán</div>
@@ -172,10 +223,10 @@ const Detail = () => {
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
-          <div className="col-md-12 col-lg-2"></div>
-          <div className="col-md-12 col-lg-7 detail__chart">
-            <div className="detail__chart--title">Biểu đồ dự đoán</div>
-            <div className="detail__chart--desc">Doanh thu</div>
+          <div className="col-12 col-md-12 col-lg-1"></div>
+          <div className="col-12 col-sx-12 col-md-12 col-lg-8 detail__chart">
+            {/* <div className="detail__chart--title">Biểu đồ dự đoán</div>
+            <div className="detail__chart--desc">Doanh thu</div> */}
             {/* <canvas id="newChart" width="400" height="400"></canvas> */}
           </div>
         </div>

@@ -1,4 +1,6 @@
 import "./App.scss";
+
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -8,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -19,8 +22,10 @@ function App() {
         draggable
         pauseOnHover
       />
-      <Header />
-      <Router />
+      <React.StrictMode>
+        <Router />
+      </React.StrictMode>
+
       <Footer />
     </BrowserRouter>
   );

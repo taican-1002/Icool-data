@@ -1,8 +1,14 @@
 @use "../../scss/" as *;
 
 .detail {
-  margin: 100px 16px 16px;
+  padding: 100px 16px 16px;
   position: relative;
+  @include tablet {
+    padding: 80px 16px 16px;
+  }
+  @include mobile {
+    padding: 70px 16px 16px;
+  }
   &-btn {
     margin-top: 70px !important;
     width: 100%;
@@ -23,7 +29,7 @@
     }
   }
   &__body {
-    padding: 70px 100px;
+    padding: 30px 40px;
     @include flex(unset, center);
     @include tablet {
       flex-direction: column;
@@ -43,6 +49,9 @@
   }
   &-time {
     margin-top: 80px;
+    @include tablet {
+      margin-top: 50px;
+    }
   }
   &-title {
     padding-bottom: 20px;
@@ -57,29 +66,37 @@
   &__chart {
     border: 3px solid #3b85fe;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
+    height: 681px;
+    @include tablet {
+      padding: 14px 0 0 0;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 654px !important;
+    }
 
     &--title {
       font-family: "IBM Plex Sans";
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
-      line-height: 24px;
+      line-height: 10px;
       letter-spacing: 0.44px;
       color: #263238;
       text-align: center;
     }
-    &--desc {
-      font-family: "IBM Plex Sans";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      letter-spacing: 0.25px;
-      color: #607d8b;
-      padding: 10px 0px 20px;
-      text-align: center;
-    }
+    // &--desc {
+    //   font-family: "IBM Plex Sans";
+    //   font-style: normal;
+    //   font-weight: 400;
+    //   font-size: 14px;
+    //   line-height: 20px;
+    //   letter-spacing: 0.25px;
+    //   color: #607d8b;
+    //   padding: 4px 0px;
+    // }
   }
 }
 
@@ -101,6 +118,31 @@
 }
 .css-df17o1 {
   color: black !important;
+}
+.css-19ygod6-MuiNativeSelect-select-MuiInputBase-input-MuiInput-input.css-19ygod6-MuiNativeSelect-select-MuiInputBase-input-MuiInput-input.css-19ygod6-MuiNativeSelect-select-MuiInputBase-input-MuiInput-input {
+  padding-left: 10px;
+}
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+  @include tablet {
+    padding: 0 10px !important;
+  }
+}
+.css-1480iag-MuiInputBase-root-MuiInput-root,
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+  @include tablet {
+    font-size: 1.8rem !important;
+  }
+}
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  @include tablet {
+    padding: 22px 14px !important;
+    font-size: 1.4rem !important;
+  }
+}
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  @include tablet {
+    font-size: 1.8rem !important;
+  }
 }
 
 .loading {
