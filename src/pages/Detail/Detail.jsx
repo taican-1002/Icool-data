@@ -70,6 +70,7 @@ const Detail = () => {
     datasets: [
       {
         data: objStore.map((item, index) => objStore[index].count),
+        label: "Doanh thu",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         fill: true,
