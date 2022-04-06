@@ -1,7 +1,7 @@
 @use "../../scss/" as *;
 
 .detail {
-  padding: 100px 16px 16px;
+  padding: 100px 16px 20px;
   position: relative;
   @include tablet {
     padding: 80px 16px 16px;
@@ -9,7 +9,8 @@
   @include mobile {
     padding: 70px 16px 16px;
   }
-  &-btn {
+  &-btn,
+  .predict-btn {
     margin-top: 70px !important;
     width: 100%;
     @include tablet {
@@ -29,7 +30,7 @@
     }
   }
   &__body {
-    padding: 30px 40px;
+    padding: 48px 40px;
     @include flex(unset, center);
     @include tablet {
       flex-direction: column;
@@ -67,14 +68,18 @@
     border: 3px solid #3b85fe;
     border-radius: 10px;
     padding: 10px;
-    height: 681px;
+    height: 100%;
     @include tablet {
       padding: 14px 0 0 0;
     }
+    // @include mobile {
+    //   height: 400px;
+    // }
 
     canvas {
-      width: 100% !important;
-      height: 654px !important;
+      position: relative;
+      // width: 100% !important;
+      // height: 100% !important;
     }
 
     &--title {
@@ -85,18 +90,18 @@
       line-height: 10px;
       letter-spacing: 0.44px;
       color: #263238;
-      text-align: center;
+      padding: 10px 0;
     }
-    // &--desc {
-    //   font-family: "IBM Plex Sans";
-    //   font-style: normal;
-    //   font-weight: 400;
-    //   font-size: 14px;
-    //   line-height: 20px;
-    //   letter-spacing: 0.25px;
-    //   color: #607d8b;
-    //   padding: 4px 0px;
-    // }
+    &--desc {
+      font-family: "IBM Plex Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.25px;
+      color: #607d8b;
+      padding: 0px 0px 10px 0px;
+    }
   }
 }
 
@@ -144,7 +149,9 @@
     font-size: 1.8rem !important;
   }
 }
-
+.from-date {
+  font-size: 100px !important;
+}
 .loading {
   display: none;
   position: absolute;
@@ -175,3 +182,7 @@
 .block {
   display: block !important;
 }
+// .dots {
+//   top: 200px !important;
+//   left: 10% !important;
+// }

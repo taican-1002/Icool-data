@@ -38,7 +38,7 @@ const Header = () => {
       await baseReq
         .post("user")
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           setUser(response.data);
         })
         .catch((error) => {
