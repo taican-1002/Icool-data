@@ -1,6 +1,6 @@
 import "./detail.scss";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Chart as ChartJS,
@@ -25,27 +25,30 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
-import { store, obj, object } from "../../api/ObjectApi";
+import { store } from "../../api/ObjectApi";
 
 const Detail = () => {
   const [storeName, setStoreName] = useState(0);
-  const detailChartRef = useRef(null);
-  const [objStore, setObjStore] = useState(object);
+  const [objStore, setObjStore] = useState([]);
 
   const [fromDate, setFromDate] = useState("2022-04-05");
   const [toDate, setToDate] = useState("2022-05-27");
 
   const [labelInput, setLabelInput] = useState();
-
   const [CH, setCH] = useState("0");
 
+  /**Start handleChange Store */
   const handleChange = (e) => {
     setStoreName(e.target.value);
   };
+  /**End handleChange Store */
 
+  /**Start loading */
   const loading = document.getElementsByClassName("loading");
   const loadingOverlay = document.getElementsByClassName("loading-overlay");
+  /**End loading */
 
+  /**Start ChartJS */
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -57,9 +60,7 @@ const Detail = () => {
   const options = {
     responsive: true,
   };
-
   const labels = labelInput;
-
   const data = {
     labels,
     datasets: [
@@ -91,6 +92,7 @@ const Detail = () => {
       },
     ],
   };
+  /**End ChartJS */
 
   //#region Event
   const onDownload = () => {
@@ -118,18 +120,7 @@ const Detail = () => {
   };
   //#endregion
 
-  var getDaysArray = function (start, end) {
-    for (
-      var arr = [], dt = new Date(start);
-      dt <= end;
-      dt.setDate(dt.getDate() + 1)
-    ) {
-      arr.push(new Date(dt));
-    }
-    return arr;
-  };
-
-  /** Gọi API để lấy dữ liệu gồm date1, date2, tên cửa hàng, số CH */
+  /** Start post API*/
   const getInfo = async () => {
     var myDict = {
       date1: fromDate,
@@ -154,12 +145,14 @@ const Detail = () => {
         setLabelInput(date);
       });
   };
+  /**End post API */
 
-  /**Submit */
+  /**Start func Submit */
   const handleSubmit = () => {
     setCH(storeName);
     getInfo();
   };
+  /**Start func Submit */
 
   useEffect(() => {
     getInfo();
@@ -258,7 +251,7 @@ const Detail = () => {
           </div>
           <div className="col-12 col-md-12 col-lg-1"></div>
           <div className="col-12 col-sx-12 col-md-12 col-lg-8 detail__right">
-            <div className="detail__chart" ref={detailChartRef}>
+            <div className="detail__chart">
               <div className="detail__chart--title">Biểu đồ dự đoán</div>
               <div className="detail__chart--desc">Doanh thu</div>
               <Line options={options} data={data} />;
