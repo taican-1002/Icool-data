@@ -32,21 +32,16 @@ const Detail = () => {
   const detailChartRef = useRef(null);
   const [objStore, setObjStore] = useState(object);
 
-  const [fromDate, setFromDate] = useState();
-  const [toDate, setToDate] = useState();
+  const [fromDate, setFromDate] = useState("2022-04-05");
+  const [toDate, setToDate] = useState("2022-05-27");
 
-  const key = Object.keys(obj);
-  const [labelInput, setLabelInput] = useState(key);
+  const [labelInput, setLabelInput] = useState();
+
+  const [CH, setCH] = useState("0");
 
   const handleChange = (e) => {
     setStoreName(e.target.value);
   };
-
-  // const convertArr = Object.entries(obj);
-  const value = Object.values(obj);
-
-  // const keyCount = key.map((item) => dayjs(item).format("DD/MM"));
-  // console.log(value);
 
   const loading = document.getElementsByClassName("loading");
   const loadingOverlay = document.getElementsByClassName("loading-overlay");
@@ -69,19 +64,60 @@ const Detail = () => {
     labels,
     datasets: [
       {
-        data: objStore.map((item, index) => objStore[index].count),
+        data: objStore.map((item, index) => objStore[index].value),
         label: "Doanh thu",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         fill: true,
+        option: {
+          scales: {
+            xAxis: {
+              offset: true,
+              grid: {
+                offset: true,
+              },
+              ticks: {
+                autoSkip: true,
+              },
+            },
+            yAxis: {
+              beginAtZero: false,
+              ticks: {
+                autoSkip: true,
+              },
+            },
+          },
+        },
       },
     ],
   };
 
-  // const native = document.getElementsByClassName("native");
-  // native[0].addEventListener("change", (event) => {
-  //   setStoreName(event.target.value);
-  // });
+  //#region Event
+  const onDownload = () => {
+    var myDict = {
+      date1: fromDate,
+      date2: toDate,
+      CH: CH,
+    };
+    let formatDate1 = dayjs(fromDate).format("DD/MM");
+    let formatDate2 = dayjs(toDate).format("DD/MM");
+    axios
+      .post("http://127.0.0.1:5001/download", {
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(myDict),
+      })
+      .then((res) => {
+        fileDownload(res.data, `${CH}_${formatDate1}_${formatDate2}.csv`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  //#endregion
+
   var getDaysArray = function (start, end) {
     for (
       var arr = [], dt = new Date(start);
@@ -94,43 +130,41 @@ const Detail = () => {
   };
 
   /** Gọi API để lấy dữ liệu gồm date1, date2, tên cửa hàng, số CH */
+  const getInfo = async () => {
+    var myDict = {
+      date1: fromDate,
+      date2: toDate,
+      CH: CH,
+    };
+    await axios
+      .post("http://127.0.0.1:5001/predict", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(myDict),
+      })
+      .then((res) => {
+        let obj = [];
+        let date = [];
+        for (var item in res.data) {
+          obj.push({ value: res.data[item] });
+          date.push(dayjs(item).format("DD/MM"));
+        }
+        setObjStore(obj);
+        setLabelInput(date);
+      });
+  };
+
+  /**Submit */
   const handleSubmit = () => {
-    const index = store.findIndex((item) => item.count == storeName);
-
-    var daylist = getDaysArray(new Date(fromDate), new Date(toDate));
-    if (fromDate != null && toDate != null) {
-      const listArr = daylist.map((v) =>
-        dayjs(v.toISOString().slice(0, 10)).format("DD/MM")
-      );
-      setLabelInput(listArr);
-    }
-
-    setObjStore(store[index].object);
+    setCH(storeName);
+    getInfo();
   };
 
   useEffect(() => {
-    /**Gọi API để lấy dữ liệu ban đầu như: dữ liệu của cửa hàng đầu tiên */
+    getInfo();
 
-    // const getInfo = async () => {
-    //   await axios
-    //     .post("http://127.0.0.1:5000/predict", {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(myDict),
-    //     })
-    //     .then((res) => console.log(res))
-    //     .catch((error) => console.log(error));
-    // };
-    // getInfo();
-
-    const from = document.getElementsByClassName("fromDate");
-    const fromChild = from[0].children[1].children[0].value;
-    setFromDate(fromChild);
-    const to = document.getElementsByClassName("toDate");
-    const toChild = to[0].children[1].children[0].value;
-    setToDate(toChild);
-
+    /** Start Loading */
     window.onload = () => {
       loading[0].classList.add("block");
       loadingOverlay[0].classList.add("block");
@@ -140,26 +174,7 @@ const Detail = () => {
       loading[0].classList.remove("block");
       loadingOverlay[0].classList.remove("block");
     }, 2000);
-
-    // console.log(myChart.data.datasets[0].data);
-    const btn = document.getElementsByClassName("detail-btn");
-
-    /**Gọi API định dạng xlsx để export ra file excel */
-    function download() {
-      axios
-        .get("apiExcel/here", {
-          responseType: "blob",
-        })
-        .then((res) => {
-          fileDownload(res.data, "file.xlsx");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    btn[0].addEventListener("click", () => {
-      download();
-    });
+    /**End Loading */
   }, []);
 
   return (
@@ -212,7 +227,7 @@ const Detail = () => {
                   label="Đến ngày"
                   type="date"
                   className="toDate"
-                  defaultValue="2022-04-20"
+                  defaultValue="2022-05-27"
                   onChange={(e) => setToDate(e.target.value)}
                   sx={{ width: 220 }}
                   InputLabelProps={{
@@ -228,7 +243,11 @@ const Detail = () => {
             >
               Predict
             </Button>
-            <Button variant="contained" className="detail-btn">
+            <Button
+              variant="contained"
+              className="detail-btn"
+              onClick={onDownload}
+            >
               Download
             </Button>
           </div>
@@ -238,7 +257,7 @@ const Detail = () => {
             </div>
           </div>
           <div className="col-12 col-md-12 col-lg-1"></div>
-          <div className="col-12 col-sx-12 col-md-12 col-lg-8 ">
+          <div className="col-12 col-sx-12 col-md-12 col-lg-8 detail__right">
             <div className="detail__chart" ref={detailChartRef}>
               <div className="detail__chart--title">Biểu đồ dự đoán</div>
               <div className="detail__chart--desc">Doanh thu</div>

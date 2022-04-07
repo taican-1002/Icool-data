@@ -28,6 +28,14 @@
       order: 1;
       padding-top: 60px;
     }
+    @media (min-width: 992px) and (max-width: 1024px) {
+      width: 80% !important;
+    }
+  }
+  &__right {
+    @media (min-width: 992px) and (max-width: 1024px) {
+      width: 80%;
+    }
   }
   &__body {
     padding: 48px 40px;
@@ -38,7 +46,9 @@
     }
     @media (min-width: 992px) and (max-width: 1024px) {
       align-items: center;
+      padding: 70px 0;
     }
+
     @include mobile {
       padding: 70px 10px;
     }
@@ -91,6 +101,9 @@
       letter-spacing: 0.44px;
       color: #263238;
       padding: 10px 0;
+      @include tablet {
+        padding: 10px 8px;
+      }
     }
     &--desc {
       font-family: "IBM Plex Sans";
@@ -101,6 +114,9 @@
       letter-spacing: 0.25px;
       color: #607d8b;
       padding: 0px 0px 10px 0px;
+      @include tablet {
+        padding: 0px 0px 10px 8px;
+      }
     }
   }
 }
