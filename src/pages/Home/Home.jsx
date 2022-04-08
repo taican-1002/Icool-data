@@ -17,9 +17,11 @@ const Home = () => {
   const [error, setError] = useState("");
 
   let navigate = useNavigate();
+
   const loading = document.getElementsByClassName("loading");
   const loadingOverlay = document.getElementsByClassName("loading-overlay");
 
+  /**Start Handle Login */
   const handleLogin = (e) => {
     e.preventDefault();
     var data = new FormData();
@@ -52,6 +54,8 @@ const Home = () => {
         setError(error.response.data);
       });
   };
+  /**End Handle Login */
+
   return (
     <div className="home container">
       <div className="home__form">
