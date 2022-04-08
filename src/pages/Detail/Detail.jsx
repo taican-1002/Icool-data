@@ -67,7 +67,7 @@ const Detail = () => {
     datasets: [
       {
         data: objStore.map((item, index) => objStore[index].value),
-        label: "Doanh thu",
+        label: "Doanh thu ",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         fill: true,
@@ -105,7 +105,7 @@ const Detail = () => {
     let formatDate1 = dayjs(fromDate).format("DD/MM");
     let formatDate2 = dayjs(toDate).format("DD/MM");
     axios
-      .post("http://127.0.0.1:5001/download", {
+      .post("http://192.168.1.24:5001/download", {
         responseType: "blob",
         headers: {
           "Content-Type": "application/json",
@@ -129,7 +129,7 @@ const Detail = () => {
       CH: CH,
     };
     await axios
-      .post("http://127.0.0.1:5001/predict", {
+      .post("http://192.168.1.24:5001/predict", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -236,14 +236,14 @@ const Detail = () => {
               className=" predict-btn"
               onClick={handleSubmit}
             >
-              Predict
+              DỰ ĐOÁN
             </Button>
             <Button
               variant="contained"
               className="detail-btn"
               onClick={onDownload}
             >
-              Download
+              TẢI VỀ
             </Button>
           </div>
           <div className="loading-overlay">
@@ -255,8 +255,8 @@ const Detail = () => {
           <div className="col-12 col-sx-12 col-md-12 col-lg-8 detail__right">
             <div className="detail__chart">
               <div className="detail__chart--title">Biểu đồ dự đoán</div>
-              <div className="detail__chart--desc">Doanh thu</div>
-              <Line options={options} data={data} />;
+              <div className="detail__chart--desc">Doanh thu (triệu)</div>
+              <Line options={options} data={data} />
             </div>
           </div>
         </div>
