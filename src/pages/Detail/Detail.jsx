@@ -35,11 +35,12 @@ const Detail = () => {
   const [toDate, setToDate] = useState("2022-05-27");
 
   const [labelInput, setLabelInput] = useState();
-  const [CH, setCH] = useState("0");
+  const [CH, setCH] = useState(storeName);
 
   /**Start handleChange Store */
   const handleChange = (e) => {
     setStoreName(e.target.value);
+    setCH(e.target.value ? e.target.value : undefined);
   };
   /**End handleChange Store */
 
@@ -149,6 +150,7 @@ const Detail = () => {
 
   /**Start func Submit */
   const handleSubmit = () => {
+    console.log(storeName);
     setCH(storeName);
     getInfo();
   };
