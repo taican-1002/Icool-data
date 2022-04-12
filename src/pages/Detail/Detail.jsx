@@ -71,6 +71,8 @@ const Detail = () => {
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         fill: true,
+        pointStyle: "circle",
+        pointRadius: 4,
         option: {
           scales: {
             xAxis: {
@@ -88,6 +90,9 @@ const Detail = () => {
                 autoSkip: true,
               },
             },
+          },
+          tooltip: {
+            usePointStyle: true,
           },
         },
       },
